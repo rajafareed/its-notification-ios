@@ -1,23 +1,34 @@
 // swift-tools-version: 5.10
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 import PackageDescription
 
 let package = Package(
     name: "its-notification-library",
+    platforms: [
+        .iOS(.v12) // Ensure this package targets iOS
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "its-notification-library",
-            targets: ["its-notification-library"]),
+            targets: ["its-notification-library"]
+        ),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0"),
+
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "its-notification-library"),
+            name: "its-notification-library",
+            dependencies: [
+                .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
+            ],
+            resources: [
+                .process("Resources/GoogleService-Info.plist") // Correct path to your plist file
+                ]
+        ),
         .testTarget(
             name: "its-notification-libraryTests",
-            dependencies: ["its-notification-library"]),
+            dependencies: ["its-notification-library"]
+        ),
     ]
 )
