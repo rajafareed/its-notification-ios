@@ -43,6 +43,7 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
 
     public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("FCM Token from SDK: \(fcmToken ?? "")")
+   
     }
 
     // MARK: - Foreground Notification
@@ -54,12 +55,32 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
     }
     
     
-    func configureFirebase() {
+    func configureFirebase(apiKey: String,
+                           googleAppID: String) {
+        
+        
+        let firebaseOptions = FirebaseOptions(googleAppID: googleAppID,
+            gcmSenderID: "590518950252")
+
+        firebaseOptions.apiKey = apiKey
+        firebaseOptions.bundleID = "its-notification-library"
+        firebaseOptions.projectID = "parent-app-eb9dd"
+        
+        FirebaseApp.configure(options: firebaseOptions)
+        
+        
+        
         // If you're in an app that uses the Swift package, use Bundle.main to access resources
-        if let resourceURL = Bundle.main.url(forResource: "Resources/GoogleService-Info", withExtension: "plist"),
-           let options = FirebaseOptions(contentsOfFile: resourceURL.path) {
-            FirebaseApp.configure(options: options)
-        }
+//        if let resourceURL = Bundle.main.url(forResource: "Resources/GoogleService-Info", withExtension: "plist"),
+//
+//            
+//            
+//            
+//            let options = FirebaseOptions(contentsOfFile: resourceURL.path) {
+//
+//
+//            FirebaseApp.configure(options: options)
+//        }
     }
 
 }
