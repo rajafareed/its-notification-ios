@@ -55,7 +55,7 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
     }
     
     
-    func configureFirebase(apiKey: String,
+    public func configureFirebase(apiKey: String,
                            googleAppID: String) {
         
         
