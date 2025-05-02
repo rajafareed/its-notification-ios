@@ -55,15 +55,15 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
     }
     
     
-    public func configureFirebase(apiKey: String,
-                           googleAppID: String) {
+    func configureFirebase(apiKey: String,
+                           googleAppID: String,bundleID: String) {
         
         
         let firebaseOptions = FirebaseOptions(googleAppID: googleAppID,
             gcmSenderID: "590518950252")
 
         firebaseOptions.apiKey = apiKey
-        firebaseOptions.bundleID = "its-notification-library"
+        firebaseOptions.bundleID = bundleID
         firebaseOptions.projectID = "parent-app-eb9dd"
         
         FirebaseApp.configure(options: firebaseOptions)
