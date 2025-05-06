@@ -58,15 +58,22 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
    public func configureFirebase(apiKey: String,
                            googleAppID: String,bundleID: String) {
         
-        
-        let firebaseOptions = FirebaseOptions(googleAppID: googleAppID,
+       guard FirebaseApp.app() == nil else {
+                  print("Firebase already configured")
+                  return
+              }
+      
+
+       
+        let options = FirebaseOptions(googleAppID: googleAppID,
             gcmSenderID: "590518950252")
 
-        firebaseOptions.apiKey = apiKey
-        firebaseOptions.bundleID = bundleID
-        firebaseOptions.projectID = "parent-app-eb9dd"
+       options.apiKey = apiKey
+       options.bundleID = bundleID
+       options.projectID = "parent-app-eb9dd"
         
-        FirebaseApp.configure(options: firebaseOptions)
+       FirebaseApp.configure(options: options)
+             print("✅ Firebase configured with custom options")
         
         
         
