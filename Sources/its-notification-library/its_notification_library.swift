@@ -28,8 +28,22 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
                 }
             }
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    print("❌ Failed to fetch FCM token: \(error.localizedDescription)")
+                } else if let token = token {
+                    print("📲 FCM Token from library: \(token)")
+                }
+            }
+        }
     }
 
+    
+    public func setAPNsToken(_ deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        print("✅ APNs token set in SDK")
+    }
     public func processRemoteNotification(userInfo: [AnyHashable: Any]) {
         if let aps = userInfo["aps"] as? [String: Any],
            let alert = aps["alert"] as? [String: String] {
