@@ -18,8 +18,9 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
     }
 
     public func configure(application: UIApplication) {
-        UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
             if granted {
@@ -38,6 +39,23 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
             }
         }
     }
+    
+    public func setAPNsToken(_ deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        print("✅ APNs token set in SDK")
+
+        // ✅ Delay slightly on main thread to ensure APNs registration propagates
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    print("❌ Failed to fetch FCM token after APNs token: \(error.localizedDescription)")
+                } else if let token = token {
+                    print("📲 FCM Token (after APNs): \(token)")
+                }
+            }
+        }
+    }
+
 
     
 //    public func setAPNsToken(_ deviceToken: Data) {
