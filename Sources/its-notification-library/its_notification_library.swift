@@ -29,12 +29,12 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
                 }
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             Messaging.messaging().token { token, error in
                 if let error = error {
-                    print("❌ Failed to fetch FCM token: \(error.localizedDescription)")
+                    print("❌ hello Failed to fetch FCM token: \(error.localizedDescription)")
                 } else if let token = token {
-                    print("📲 FCM Token from library: \(token)")
+                    print("📲 hello FCM Token from library: \(token)")
                 }
             }
         }
@@ -45,7 +45,7 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
         print("✅ APNs token set in SDK")
 
         // ✅ Delay slightly on main thread to ensure APNs registration propagates
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             Messaging.messaging().token { token, error in
                 if let error = error {
                     print("❌ Failed to fetch FCM token after APNs token: \(error.localizedDescription)")
