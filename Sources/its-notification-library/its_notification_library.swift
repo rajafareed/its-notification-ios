@@ -58,11 +58,11 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
    public func configureFirebase(apiKey: String,
                            googleAppID: String,bundleID: String) {
         
-       guard FirebaseApp.app() == nil else {
-                  print("Firebase already configured")
-                  return
-              }
-      
+//       guard FirebaseApp.app() == nil else {
+//                  print("Firebase already configured")
+//                  return
+//              }
+//      
 
        
         let options = FirebaseOptions(googleAppID: googleAppID,
