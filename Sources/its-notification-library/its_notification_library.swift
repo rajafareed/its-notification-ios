@@ -43,6 +43,15 @@ public class NotificationHandler: NSObject, UNUserNotificationCenterDelegate, Me
     public func setAPNsToken(_ deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
         print("✅ APNs token set in SDK")
+
+        // Now safe to request FCM token
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("❌ Failed to fetch FCM token after setting APNs token: \(error.localizedDescription)")
+            } else if let token = token {
+                print("📲 FCM Token (after APNs): \(token)")
+            }
+        }
     }
     public func processRemoteNotification(userInfo: [AnyHashable: Any]) {
         if let aps = userInfo["aps"] as? [String: Any],
